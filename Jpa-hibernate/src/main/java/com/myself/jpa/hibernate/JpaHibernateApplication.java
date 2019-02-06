@@ -32,7 +32,8 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Override
 	public void run(String... arg0) throws Exception {
-		studentRepository.saveStudentWithPassport();
+		//studentRepository.saveStudentWithPassport();
 		//repository.playWithEntityManager();
+		courseRepository.addReviewsForCourse();
 	}	
 }

@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.myself.jpa.hibernate.JpaHibernateApplication;
 import com.myself.jpa.hibernate.entity.Course;
+import com.myself.jpa.hibernate.entity.Passport;
 import com.myself.jpa.hibernate.entity.Student;
 
 @RunWith(SpringRunner.class)
@@ -51,6 +52,14 @@ public class StudentRepositoryTest {
 		Student student = em.find(Student.class, 20001L);
 		logger.info("student -> {}", student);
 		logger.info("passport -> {}",student.getPassport());
+	}
+	
+	@Test
+	@Transactional
+	public void retrievePassportAndAssociatedStudent() {
+		Passport passport = em.find(Passport.class, 40001L);
+		logger.info("passport -> {}", passport);
+		logger.info("student -> {}", passport.getStudent());
 	}
 }
 
