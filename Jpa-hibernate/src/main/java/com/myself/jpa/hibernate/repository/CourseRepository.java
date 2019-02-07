@@ -1,5 +1,7 @@
 package com.myself.jpa.hibernate.repository;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import org.slf4j.Logger;
@@ -55,24 +57,36 @@ public class CourseRepository {
 		
 	}
 
-public void addReviewsForCourse() {
-	//get the course 10003
-	Course course = findById(10003L);
+	public void addHardcodedReviewsForCourse() {
+		//get the course 10003
+		Course course = findById(10003L);
+		logger.info("course.getReviews() -> {}", course.getReviews());
+		
+		//add 2 reviews to it
+		Review review1 = new Review("5", "Great Hands-on Stuff.");	
+		Review review2 = new Review("5", "Hatsoff.");
+		
+		//setting the relationship
+		course.addReview(review1);
+		review1.setCourse(course);
+		
+		course.addReview(review2);
+		review2.setCourse(course);
+		
+		//save it to the database
+		em.persist(review1);
+		em.persist(review2);
+	}
+
+public void addReviewsForCourse(Long courseId, List<Review> reviews) {		
+	Course course = findById(courseId);
 	logger.info("course.getReviews() -> {}", course.getReviews());
-	
-	//add 2 reviews to it
-	Review review1 = new Review("5", "Great Hands-on Stuff.");	
-	Review review2 = new Review("5", "Hatsoff.");
-	
-	//setting the relationship
-	course.addReview(review1);
-	review1.setCourse(course);
-	
-	course.addReview(review2);
-	review2.setCourse(course);
-	
-	//save it to the database
-	em.persist(review1);
-	em.persist(review2);
+	for(Review review:reviews)
+	{			
+		//setting the relationship
+		course.addReview(review);
+		review.setCourse(course);
+		em.persist(review);
+	}
 }
 }
