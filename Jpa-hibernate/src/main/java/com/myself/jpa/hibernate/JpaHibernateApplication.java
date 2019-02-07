@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.myself.jpa.hibernate.entity.Course;
 import com.myself.jpa.hibernate.entity.Review;
+import com.myself.jpa.hibernate.entity.Student;
 import com.myself.jpa.hibernate.repository.CourseRepository;
 import com.myself.jpa.hibernate.repository.StudentRepository;
 
@@ -39,11 +40,14 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 		//studentRepository.saveStudentWithPassport();
 				//repository.playWithEntityManager();
 				//courseRepository.addHardcodedReviewsForCourse();
-				List<Review> reviews = new ArrayList<>();
+				//List<Review> reviews = new ArrayList<>();
 				
-				reviews.add(new Review("5", "Great Hands-on Stuff."));	
-				reviews.add(new Review("5", "Hatsoff."));
+				//reviews.add(new Review("5", "Great Hands-on Stuff."));	
+				//reviews.add(new Review("5", "Hatsoff."));
 
-				courseRepository.addReviewsForCourse(10003L, reviews );		
-	}	
+				//courseRepository.addReviewsForCourse(10003L, reviews );
+				//studentRepository.insertHardcodedStudentAndCourse();
+				studentRepository.insertStudentAndCourse(new Student("Jack"), 
+						new Course("Microservices in 100 Steps"));
+}
 }
