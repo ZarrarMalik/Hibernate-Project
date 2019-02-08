@@ -1,5 +1,6 @@
 package com.myself.jpa.hibernate;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,9 +12,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.myself.jpa.hibernate.entity.Course;
+import com.myself.jpa.hibernate.entity.FullTimeEmployee;
+import com.myself.jpa.hibernate.entity.PartTimeEmployee;
 import com.myself.jpa.hibernate.entity.Review;
 import com.myself.jpa.hibernate.entity.Student;
 import com.myself.jpa.hibernate.repository.CourseRepository;
+import com.myself.jpa.hibernate.repository.EmployeeRepository;
 import com.myself.jpa.hibernate.repository.StudentRepository;
 
 @SpringBootApplication
@@ -30,6 +34,10 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
 	private StudentRepository studentRepository;
+	
+	@Autowired
+	private EmployeeRepository employeeRepository;
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(JpaHibernateApplication.class, args);
@@ -47,7 +55,11 @@ private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 				//courseRepository.addReviewsForCourse(10003L, reviews );
 				//studentRepository.insertHardcodedStudentAndCourse();
-				studentRepository.insertStudentAndCourse(new Student("Jack"), 
-						new Course("Microservices in 100 Steps"));
+				//studentRepository.insertStudentAndCourse(new Student("Jack"), 
+					//	new Course("Microservices in 100 Steps"));
+		employeeRepository.insert(new PartTimeEmployee("Jill", new BigDecimal("50")));
+		employeeRepository.insert(new FullTimeEmployee("Jack", new BigDecimal("10000")));
+
+		logger.info("All Employees -> {}", employeeRepository.retrieveAllEmployees());
 }
 }
