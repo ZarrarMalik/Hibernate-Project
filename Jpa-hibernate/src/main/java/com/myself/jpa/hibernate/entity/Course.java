@@ -16,7 +16,9 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -24,9 +26,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @NamedQueries(value = { 
 		@NamedQuery(name = "query_get_all_courses", 
 				query = "Select  c  From Course c"),
+		@NamedQuery(name = "query_get_all_courses_join_fetch", 
+		query = "Select  c  From Course c JOIN FETCH c.students s"),	
 		@NamedQuery(name = "query_get_100_Step_courses", 
 		query = "Select  c  From Course c where name like '%100 Steps'") })
 @Cacheable
+@SQLDelete(sql="update course set is_deleted=true where id=?")
+@Where(clause="is_deleted = false")
 public class Course {
 
 	@Id
@@ -49,7 +55,8 @@ public class Course {
 	@CreationTimestamp
 	private LocalDateTime createdDate;
 	
-	
+	private boolean isDeleted;
+
 	
 	protected Course() {
 	}
